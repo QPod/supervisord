@@ -1,4 +1,4 @@
-[![Go Report Card](https://goreportcard.com/badge/github.com/ochinchina/supervisord)](https://goreportcard.com/report/github.com/ochinchina/supervisord)
+[![Go Report Card](https://goreportcard.com/badge/github.com/QPod/supervisord)](https://goreportcard.com/report/github.com/QPod/supervisord)
 
 # Why this project?
 
