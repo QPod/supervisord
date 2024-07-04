@@ -25,8 +25,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build Binary
         run: |
-          cd src
-          pwd && ls -alh && cd supervisord
+          cd src pwd && ls -alh
+          cd supervisord
+          go mod tidy
           go test -v
           go build -v -o ../../build/
           cd ../../
