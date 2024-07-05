@@ -7,6 +7,7 @@ COPY . /src
 WORKDIR /src
 RUN pwd && ls -alh \
  && cd supervisord \
+ && go mod tidy \
  && CGO_ENABLED=1 go build -a -ldflags "-linkmode external -extldflags -static" -o /usr/local/bin/supervisord \
  && supervisord version
 
