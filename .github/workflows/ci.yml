@@ -27,7 +27,7 @@ env:
   DOCKER_MIRROR_REGISTRY_PASSWORD: ${{ secrets.DOCKER_MIRROR_REGISTRY_PASSWORD }}
 
 jobs:
-  build:
+  build_docker_image:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Go
@@ -38,8 +38,11 @@ jobs:
 
       - name: Build Docker
         run: |
-          source ./tool.sh && build_image supervisord latest src/clash.Dockerfile && push_image
+          source ./tool.sh && build_image supervisord latest src/supervisord.Dockerfile && push_image
 
+  build_binary:
+    runs-on: ubuntu-latest
+    steps:
       - name: Build Binary
         run: |
           set -eux
