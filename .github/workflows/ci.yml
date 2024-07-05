@@ -55,11 +55,3 @@ jobs:
           cd ../../
           mv src/supervisor.ini src/webgui ./build/
           ls -alh build
-
-      - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v6
-        with:
-          distribution: goreleaser
-          version: latest
-          args: release
-          workdir: src/supervisord

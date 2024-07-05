@@ -5,11 +5,9 @@ env:
 
 before:
   hooks:
-    - go generate ./...
-    - go mod download
+    - go mod tidy
 
 builds:
-
   - id: dynamic
     binary: supervisord
     env:
