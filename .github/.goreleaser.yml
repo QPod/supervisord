@@ -90,6 +90,9 @@ archives:
     files:
       - none*
 
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+
 release:
   github:
     owner: QPod
