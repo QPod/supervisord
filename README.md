@@ -39,7 +39,6 @@ Please note that config-file location autodetected in this order:
 5. ../etc/supervisord.conf (Relative to the executable)
 6. ../supervisord.conf (Relative to the executable)
 
-
 ### Run as daemon with web-ui
 
 Add the inet interface in your configuration:
@@ -254,8 +253,8 @@ supervisord is compiled inside a Docker image to be used directly inside another
 
 ```Dockerfile
 FROM debian:latest
-COPY --from=QPod/supervisord:latest /opt/supervisord /usr/local/bin/supervisord
-CMD ["/usr/local/bin/supervisord"]
+COPY --from=QPod/supervisord:latest /opt/supervisord /opt/supervisord
+CMD ["/opt/supervisord/supervisord"]
 ```
 
 ## Integrate with Prometheus

@@ -62,3 +62,4 @@ jobs:
           distribution: goreleaser
           version: latest
           args: release
+          workdir: src/supervisord
