@@ -53,5 +53,5 @@ jobs:
           go test -v
           go build -v -o ../../build/
           cd ../../
-          mv src/supervisor.ini src/webgui ./build/
+          mv src/etc src/webgui ./build/
           ls -alh build
