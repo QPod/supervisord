@@ -13,8 +13,8 @@ RUN set -eux && pwd && ls -alh \
  && /opt/supervisord/supervisord version
 
 
-FROM scratch
+FROM busybox
 COPY --from=builder /opt/supervisord /opt/supervisord
 EXPOSE 9001
 WORKDIR /opt/supervisord/
-ENTRYPOINT ["/opt/supervisord/supervisord", "-c", "etc/supervisor.conf", "-d"]
+CMD ["/opt/supervisord/supervisord", "-c", "etc/supervisor.conf"]
