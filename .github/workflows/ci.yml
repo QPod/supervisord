@@ -47,8 +47,8 @@ jobs:
       - name: Build Binary
         run: |
           set -eux
-          cd src && pwd && ls -alh
-          cd supervisord
+          pwd && ls -alh *
+          cd src/supervisord
           go mod tidy
           go test -v
           go build -v -o ../../build/

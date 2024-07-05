@@ -51,27 +51,27 @@ port=127.0.0.1:9001
 then run
 
 ```shell
-$ supervisord -c supervisor.conf -d
+supervisord -c supervisor.conf -d
 ```
 
 In order to manage the daemon, you can use `supervisord ctl` subcommand, available subcommands are: `status`, `start`, `stop`, `shutdown`, `reload`.
 
 ```shell
-$ supervisord ctl status
-$ supervisord ctl status program-1 program-2...
-$ supervisord ctl status group:*
-$ supervisord ctl stop program-1 program-2...
-$ supervisord ctl stop group:*
-$ supervisord ctl stop all
-$ supervisord ctl start program-1 program-2...
-$ supervisord ctl start group:*
-$ supervisord ctl start all
-$ supervisord ctl shutdown
-$ supervisord ctl reload
-$ supervisord ctl signal <signal_name> <process_name> <process_name> ...
-$ supervisord ctl signal all
-$ supervisord ctl pid <process_name>
-$ supervisord ctl fg <process_name>
+supervisord ctl status
+supervisord ctl status program-1 program-2...
+supervisord ctl status group:*
+supervisord ctl stop program-1 program-2...
+supervisord ctl stop group:*
+supervisord ctl stop all
+supervisord ctl start program-1 program-2...
+supervisord ctl start group:*
+supervisord ctl start all
+supervisord ctl shutdown
+supervisord ctl reload
+supervisord ctl signal <signal_name> <process_name> <process_name> ...
+supervisord ctl signal all
+supervisord ctl pid <process_name>
+supervisord ctl fg <process_name>
 ```
 
 Please note that `supervisor ctl` subcommand works correctly only if http server is enabled in [inet_http_server], and **serverurl** correctly set. Unix domain socket is not currently supported for this pupose.

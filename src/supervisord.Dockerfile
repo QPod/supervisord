@@ -16,4 +16,5 @@ RUN set -eux && pwd && ls -alh \
 FROM scratch
 COPY --from=builder /opt/supervisord /opt/supervisord
 EXPOSE 9001
-ENTRYPOINT ["/opt/supervisord/supervisord"]
+WORKDIR /opt/supervisord/
+ENTRYPOINT ["/opt/supervisord/supervisord", "-c", "etc/supervisor.conf", "-d"]
