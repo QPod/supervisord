@@ -55,6 +55,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.22
+
       - name: Install cross-compiler for linux/arm64, UPX
         env:
           VER_UPX: "4.2.4"
@@ -68,13 +73,9 @@ jobs:
           export PATH="/opt/upx/:${PATH}"
           upx --version | grep -E '^upx'
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: 1.18
+          cd src/supervisord && go mod tidy -e
 
-      - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v6
+      - uses: goreleaser/goreleaser-action@v6
         with:
           distribution: goreleaser
           version: latest
