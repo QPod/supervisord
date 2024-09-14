@@ -9,7 +9,7 @@ RUN set -eux && pwd && ls -alh \
  && mkdir -pv /opt/supervisord && mv webgui etc /opt/supervisord/ \
  && cd supervisord \
  && go mod tidy \
- && CGO_ENABLED=0 go build -a -ldflags "-linkmode external -extldflags -static" -o /opt/supervisord/ \
+ && CGO_ENABLED=1 go build -a -ldflags "-linkmode external -extldflags -static" -o /opt/supervisord/ \
  && /opt/supervisord/supervisord version
 
 
