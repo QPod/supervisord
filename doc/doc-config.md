@@ -1,6 +1,6 @@
 # `supervisord` Configuration Guidelines
 
-### Supervisord daemon settings
+## Supervisord daemon settings
 
 Following parameters configured in "supervisord" section:
 
@@ -13,7 +13,7 @@ Following parameters configured in "supervisord" section:
 - **minprocs**. Reserve at least this amount of processes resource on supervisord startup. (Rlimit noproc).
 - **identifier**. Identifier of this supervisord instance. Required if there is more than one supervisord run on one machine in same namespace.
 
-### Supervised program settings
+## Supervised program settings
 
 Supervised program settings configured in [program:programName] section and include these options:
 
@@ -62,7 +62,7 @@ depends_on = B, C
 ...
 ```
 
-### Set default parameters for all supervised programs
+## Set default parameters for all supervised programs
 
 All common parameters that are identical for all supervised programs can be defined once in "program-default" section and omitted in all other program sections.
 
@@ -81,11 +81,11 @@ envFiles=global.env,prod.env
 
 ```
 
-### Group
+## Group
 
 Section "group" is supported and you can set "programs" item
 
-### Events
+## Events
 
 Supervisord 3.x defined events are supported partially. Now it supports following events:
 
@@ -95,7 +95,7 @@ Supervisord 3.x defined events are supported partially. Now it supports followin
 - tick related events
 - process log related events
 
-### Logs
+## Logs
 
 Supervisord can redirect stdout and stderr ( fields stdout_logfile, stderr_logfile ) of supervised programs to:
 
@@ -112,7 +112,7 @@ Multiple log files can be configured for the stdout_logfile and stderr_logfile w
 stdout_logfile = test.log, /dev/stdout
 ```
 
-#### syslog settings
+### syslog settings
 
 if write the log to the syslog, following additional parameter can be set like:
 
@@ -151,7 +151,7 @@ supervisord is compiled inside a Docker image to be used directly inside another
 
 ```Dockerfile
 FROM debian:latest
-COPY --from=QPod/supervisord:latest /opt/supervisord /opt/supervisord
+COPY --from=qpod/supervisord:ubuntu /opt/supervisord /opt/supervisord
 CMD ["/opt/supervisord/supervisord"]
 ```
 
@@ -160,7 +160,6 @@ CMD ["/opt/supervisord/supervisord"]
 The Prometheus node exporter supported supervisord metrics are now integrated into the supervisor. So there is no need to deploy an extra node_exporter to collect the supervisord metrics. To collect the metrics, the port parameter in section "inet_http_server" must be configured and the metrics server is started on the path /metrics of the supervisor http server.
 
 For example, if the port parameter in "inet_http_server" is "127.0.0.1:9001" and then the metrics server should be accessed in url "http://127.0.0.1:9001/metrics" 
-
 
 ## Register service
 
