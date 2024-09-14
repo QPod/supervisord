@@ -52,17 +52,11 @@ Please note that config-file location autodetected in this order:
 
 ### Run as daemon with web-ui
 
-Add the inet interface in your configuration:
+Add the inet interface in your configuration, and then run `supervisord -c supervisor.conf -d`:
 
 ```ini
 [inet_http_server]
 port=127.0.0.1:9001
-```
-
-then run
-
-```shell
-supervisord -c supervisor.conf -d
 ```
 
 In order to manage the daemon, you can use `supervisord ctl` subcommand, available subcommands are: `status`, `start`, `stop`, `shutdown`, `reload`.
