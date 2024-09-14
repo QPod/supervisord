@@ -27,12 +27,7 @@ jobs:
   build_docker_image:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: 1.22
       - uses: actions/checkout@v4
-
       - name: Build Docker
         run: |
           source ./tool.sh && build_image supervisord latest src/supervisord.Dockerfile && push_image
@@ -41,16 +36,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.22
       - name: Build Binary
         run: |
           set -eux
           pwd && ls -alh *
+          mkdir -pv build && mv src/etc src/webgui ./build/
           cd src/supervisord
-          go mod tidy
-          go test -v
+          go mod tidy && go test -v
           go build -v -o ../../build/
-          cd ../../
-          mv src/etc src/webgui ./build/
+          cd ../../  
           ls -alh build
 
   build_go_releaser:
@@ -81,6 +79,6 @@ jobs:
           distribution: goreleaser
           version: latest
           args: release --clean --snapshot
-          workdir: src
+          workdir: src/supervisord
         env:
           GITHUB_TOKEN: ${{ secrets.GA_TOKEN }}
