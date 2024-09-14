@@ -1,8 +1,10 @@
-FROM golang:alpine AS base
-RUN apk add --no-cache --update git gcc rust
+# Distributed under the terms of the Modified BSD License.
 
+ARG BASE_NAMESPACE
+ARG BUILD_IMG="go"
+ARG BASE_IMG="ubuntu:latest"
 
-FROM base AS builder
+FROM ${BASE_NAMESPACE:+$BASE_NAMESPACE/}${BUILD_IMG} AS builder
 COPY    ./src /tmp/src
 WORKDIR       /tmp/src
 RUN set -eux && pwd && ls -alh \
@@ -13,7 +15,9 @@ RUN set -eux && pwd && ls -alh \
  && /opt/supervisord/supervisord version
 
 
-FROM busybox
+ARG BASE_IMG="atom"
+FROM ${BASE_IMG}
+LABEL maintainer="haobibo@gmail.com"
 COPY --from=builder /opt/supervisord /opt/supervisord
 EXPOSE 9001
 WORKDIR /opt/supervisord/

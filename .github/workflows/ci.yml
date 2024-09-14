@@ -3,10 +3,10 @@ name: Build Go
 on:
   push:
     branches: [ main ]
-    paths-ignore: [ "*.md" ]
+    tags: [ "v*" ]
 
   pull_request:
-    branches: [ main ]
+    branches: [ "main" ]
     paths-ignore: [ "*.md" ]
 
   workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
@@ -30,7 +30,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build Docker
         run: |
-          source ./tool.sh && build_image supervisord latest src/supervisord.Dockerfile && push_image
+          source ./tool.sh
+          build_image supervisord latest src/supervisord.Dockerfile --build-arg "BASE_NAMESPACE=library" --build-arg "BUILD_IMG=golang:alpine" --build-arg "BASE_IMG=alpine"
+          build_image supervisord latest src/supervisord.Dockerfile --build-arg "BASE_NAMESPACE=qpod"    --build-arg "BUILD_IMG=go:latest"     --build-arg "BASE_IMG=ubuntu"
+          push_image supervisord
 
   build_binary:
     runs-on: ubuntu-latest
@@ -51,7 +54,7 @@ jobs:
           cd ../../  
           ls -alh build
 
-  build_go_releaser:
+  build_goreleaser:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -75,11 +78,15 @@ jobs:
 
           cd src/supervisord && go mod tidy -e
 
+      - if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+        # if not on a `tags/v*` git push, add `--snapshot` to flags
+        run: echo "flags=--snapshot" >> $GITHUB_ENV
+
       - uses: goreleaser/goreleaser-action@v6
         env:
           GITHUB_TOKEN: ${{ secrets.GA_TOKEN }}
         with:
           distribution: goreleaser
           version: latest
-          args: release --verbose --clean --auto-snapshot
+          args: release --verbose --clean ${{ env.flags }}
           workdir: src/supervisord
