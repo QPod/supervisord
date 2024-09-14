@@ -36,7 +36,7 @@ Supervised program settings configured in [program:programName] section and incl
 - **stderr_logfile_maxbytes**. Log size after exceed which log will be rotated.
 - **stderr_logfile_backups**. Number of rotated log-files to preserve.
 - **environment**. List of VARIABLE=value to be passed to supervised program. It has higher priority than `envFiles`.
-- **envFiles**. List of .env files to be loaded and passed to supervised program. 
+- **envFiles**. List of .env files to be loaded and passed to supervised program.
 - **priority**. The relative priority of the program in the start and shutdown ordering
 - **user**. Sudo to this USER or USER:GROUP right before exec supervised command.
 - **directory**. Jump to this path and exec supervised command there.
