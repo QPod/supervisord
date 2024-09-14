@@ -31,8 +31,10 @@ jobs:
       - name: Build Docker
         run: |
           source ./tool.sh
-          build_image supervisord ubuntu src/supervisord.Dockerfile --build-arg "BASE_NAMESPACE=library" --build-arg "BUILD_IMG=golang:alpine" --build-arg "BASE_IMG=alpine"
-          build_image supervisord alpine src/supervisord.Dockerfile --build-arg "BASE_NAMESPACE=qpod"    --build-arg "BUILD_IMG=go:latest"     --build-arg "BASE_IMG=ubuntu"
+          VER=$(date +%Y.%m%d.%H%M)${TAG_SUFFIX};
+          build_image_no_tag supervisord "ubuntu-${VER}" src/supervisord.Dockerfile --build-arg "BASE_NAMESPACE=library" --build-arg "BUILD_IMG=golang:alpine" --build-arg "BASE_IMG=alpine"
+          build_image_no_tag supervisord "alpine-${VER}" src/supervisord.Dockerfile --build-arg "BASE_NAMESPACE=qpod"    --build-arg "BUILD_IMG=go:latest"     --build-arg "BASE_IMG=ubuntu"
+          alias_image supervisord "ubuntu-${VER}" supervisord latest
           push_image supervisord
 
   build_binary:
